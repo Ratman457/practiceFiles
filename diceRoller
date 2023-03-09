@@ -2,6 +2,7 @@
 
 @author: Raymond Lehky
 Thursday, March 9th, 2023
+Written in Python 3
 
 '''
 # This program will roll dice of any size for the user.
