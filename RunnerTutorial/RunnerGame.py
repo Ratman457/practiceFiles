@@ -1,13 +1,18 @@
 '''
 
+@Author: Ratman457
 Following tutorial: https://www.youtube.com/watch?v=AY9MnQ4x3zk&t=155s
 @authorOfTutorial: Clear Code
 @authorGithub: https://github.com/clear-code-projects/UltimatePygameIntro
 
+Written in Python 3
+
 Started: Mar 10 2023
-Finished!
+Finished Mar 11 2023
+
 Added extra frame to fly animation
-Added coin + motion + extra score
+Edited and added coin images + collision + motion + extra score
+@authorOfCoins: https://laredgames.itch.io/gems-coins-free
 
 '''
 
