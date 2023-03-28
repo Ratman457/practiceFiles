@@ -36,22 +36,22 @@ hands = [player1_hand, player2_hand, player3_hand, player4_hand]
 
 def main():
     make_deck()
-    print(deck)
     time.sleep(0.2)
     deal()
     time.sleep(0.2)
     for hand in hands:
-        print(f'{hand["name"]} Hand: ', print_cards(hand['cards']))
-    print('Top card is: ', print_cards([discard[0]]))
-    print('What is left: ', len(deck), 'cards.\n', print_cards(deck))
-    print('\n\n')
+        print(f'{hand["name"]} has been dealt a hand.')
+    print('\nTop card is: ', print_cards([discard[0]]))
+    print_card_art([discard[0]])
+    print()
     time.sleep(0.2)
+    input('    Press ENTER to start the first turn.\n')
     game_loop()
 
 def game_loop():
     global deck
     global discard
-    active_player_index = random.randint(1, len(hands))
+    active_player_index = random.randint(1, len(hands) - 1)
     topcard_active = True
     while True:
         # Who is playing.
@@ -66,6 +66,7 @@ def game_loop():
         print(f'Up next is {active_player["name"]}. They have {len(active_player["cards"])} card(s) left:')
         print_card_art(active_player['cards'])
         print(f'The top card is {print_cards([discard[0]])}{queen_text} The top card is active?: {topcard_active}.')
+        print_card_art([discard[0]])
         
         # This line actually gets the active player to take a turn. Super scuffed IMO.
         topcard_active = player_turn(hands[active_player_index], topcard_active)
@@ -99,6 +100,7 @@ def game_loop():
         
         # Make it all go slower.
         time.sleep(0.2)
+        input('    Press ENTER to continue to the next turn.\n')
 
 def player_turn(player_hand, topcard_active): # Return value of this function determines the topcard_active state. I should make that global.
     topcard = discard[0]
@@ -155,6 +157,7 @@ def bot_choice(player_hand, playable_cards): # Just picks random cards and rando
     discard.insert(0, card)
     player_hand['cards'].remove(card)
     print(f'{player_hand["name"]} played the {print_cards([card])}' + queen_text)
+    print_card_art([card])
     return True
 
 def player_choice(player1_hand, playable_cards): # 'Real' player.
