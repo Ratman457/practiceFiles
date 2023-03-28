@@ -8,7 +8,7 @@ https://en.wikipedia.org/wiki/Mau-Mau_(card_game)k
 
 ASCI art: https://patorjk.com/software/taag/#p=display&f=Alpha&t=
 
-Mar 27: Completed full implementation with only bots.
+Mar 27: Completed full implementation with only bots. Later I added custom ASCII art cards for all cards.
 '''
 
 import random
@@ -36,6 +36,7 @@ hands = [player1_hand, player2_hand, player3_hand, player4_hand]
 
 def main():
     make_deck()
+    print(deck)
     time.sleep(0.2)
     deal()
     time.sleep(0.2)
@@ -62,7 +63,8 @@ def game_loop():
             queen_text = f' The Queens chosen suit is {discard[0]["extra suit"]}.'
         
         # Standard game info text.
-        print(f'Up next is {active_player["name"]}. They have {len(active_player["cards"])} card(s) left: ', print_cards(active_player['cards']))
+        print(f'Up next is {active_player["name"]}. They have {len(active_player["cards"])} card(s) left:')
+        print_card_art(active_player['cards'])
         print(f'The top card is {print_cards([discard[0]])}{queen_text} The top card is active?: {topcard_active}.')
         
         # This line actually gets the active player to take a turn. Super scuffed IMO.
@@ -203,6 +205,48 @@ def print_cards(cards): # Make card printouts but fancy.
             card_print += f'{card["value"]} of {card["suit"]}, '
         count += 1
     return card_print
+
+# Fancy ASCII ART cards \/\/\/
+suits_dict = {
+    'Leaves' : ['| .---. |', '| :/^\: |', '| /_|_\ |', "| '---' |", ],
+    'Hearts' : ['| .---. |', '| (\_/) |', '| :\_/: |', "| '---' |", ],
+    'Bells' : ['| .---. |', '| /~0~\ |', '| \_o_/ |', "| '---' |", ],
+    'Acorns' : ['| .---. |', '| (~+~) |', '| :|_|: |', "| '---' |", ]
+    }
+
+val_dict = {
+    7 : ['VII', '   '],
+    8 : ['VIII', '  '],
+    9 : ['IX', '    '],
+    10 : ['X', '     '],
+    'Jack' : ['J', '     '],
+    'Queen' : ['Q', '     '],
+    'King' : ['K', '     '],
+    'Ace' : ['A', '     ']
+    }
+
+def print_card_art(cards):
+    # Tops
+    for card in cards:
+        print('.-------. ', end = '')
+    print('\n', end = '')
+    # Top values
+    for card in cards:
+        print(f'| {val_dict[card["value"]][0]}{val_dict[card["value"]][1]}| ', end = '')
+    print('\n', end = '')
+    # Symbols
+    for i in range(0, 4):
+        for card in cards:
+            print(f'{suits_dict[card["suit"]][i]} ', end = '')
+        print('\n', end = '')
+    # Bottom values
+    for card in cards:
+        print(f'| {val_dict[card["value"]][1]}{val_dict[card["value"]][0]}| ', end = '')
+    print('\n', end = '')
+    # Bottoms
+    for card in cards:
+        print("'-------' ", end = '')
+    print('\n', end = '')
 
 main()
 
