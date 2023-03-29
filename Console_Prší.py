@@ -147,12 +147,24 @@ def game_loop():
         
         # Shuffling the deck.
         if len(deck) <= 1:
+            cards_in_hands = 0
+            for hand in hands:
+                cards_in_hands += len(hand['cards'])
             print('\n    Shuffling deck.')
+            print('Total cards in deck =', len(deck))
+            print('Total cards in discard pile =', len(discard))
+            print('Total cards in hands =', cards_in_hands)
+            print('Total cards in game before shuffle =', len(deck) + len(discard) + cards_in_hands)
             topcard = discard[0]
             discard.remove(topcard)
-            deck = discard
+            temp_deck = discard + deck
+            deck = temp_deck
             discard = [topcard]
             print('    Done!')
+            cards_in_hands = 0
+            for hand in hands:
+                cards_in_hands += len(hand['cards'])
+            print('Total cards in game after shuffle =', len(deck) + len(discard) + cards_in_hands)
         
         # Increment and handle the player index.
         if active_player_index == len(hands) - 1:
@@ -222,7 +234,8 @@ def bot_choice(player_hand, playable_cards): # Just picks random cards and rando
     player_hand['cards'].remove(card)
     print(f'{player_hand["name"]} played the {print_cards([card])}' + queen_text)
     print_card_art([card])
-    print(f'{player_hand["name"]} has {len(player_hand)} card(s) left.')
+    print(f'{player_hand["name"]} has {len(player_hand["cards"])} card(s) left.')
+    print_card_backs(player_hand["cards"])
     return True
 
 def player_choice(player_hand, playable_cards): # 'Real' player.
@@ -252,7 +265,8 @@ def player_choice(player_hand, playable_cards): # 'Real' player.
     player_hand['cards'].remove(chosen_card)
     print(f'{player_hand["name"]} played the {print_cards([chosen_card])}' + queen_text)
     print_card_art([chosen_card])
-    print(f'{player_hand["name"]} has {len(player_hand)} card(s) left.')
+    print(f'{player_hand["name"]} has {len(player_hand["cards"])} card(s) left.')
+    print_card_art(player_hand["cards"])
     return True
         
 def draw_cards(player_hand, number_of_cards):
@@ -329,6 +343,8 @@ val_dict = {
     }
 
 def print_card_art(cards):
+    if len(cards) == 0:
+        return
     # Tops
     for card in cards:
         print('.-------. ', end = '')
@@ -352,6 +368,8 @@ def print_card_art(cards):
     print('\n', end = '')
 
 def print_card_backs(cards):
+    if len(cards) == 0:
+        return
     # Tops
     for card in cards:
         print('.-------. ', end = '')
