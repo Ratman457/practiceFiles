@@ -15,6 +15,8 @@ Mar 28:
     Added help_me text.
     Player turns now work!
     Bug-fixing + prettying up.
+
+Next step is to involve pygame and make this game a proper UI.
 '''
 
 import random
@@ -61,8 +63,6 @@ gg = '''
 `-------' `-------' `-------' `-------'       `-------' `-------' `-------' `-------'
 #####################################################################################
 '''
-
-cards_per_suit = 15 
 
 player_name = ''
 deck = []
@@ -116,7 +116,7 @@ def game_loop():
         # Handle Queens.
         queen_text = ''
         if discard[0]['value'] == 'Queen':
-            queen_text = f' The Queens chosen suit is {discard[0]["extra suit"]}.'
+            queen_text = f" The Queen's chosen suit is {discard[0]['extra suit']}."
         
         # Standard game info text.
         print(f'Up next is {active_player["name"]}. They have {len(active_player["cards"])} card(s) left:')
@@ -255,7 +255,6 @@ def player_choice(player_hand, playable_cards): # 'Real' player.
     print(f'{player_hand["name"]} has {len(player_hand)} card(s) left.')
     return True
         
-    
 def draw_cards(player_hand, number_of_cards):
     drawn_cards = []
     print(f'{player_hand["name"]} drew {number_of_cards} card(s):')
@@ -273,17 +272,17 @@ def draw_cards(player_hand, number_of_cards):
 def make_deck(): # Because why would I write this all out myself?
     suits = ['Leaves', 'Hearts', 'Bells', 'Acorns']
     for suit in suits:
-        for x in range(7, cards_per_suit):
+        for x in range(7, 15):
             deck.append({'value': x, 'suit': suit, 'extra suit': 'none'})
     
     # Properly name face cards.
     for card in deck:
-        if card['value'] == cards_per_suit - 4: card['value'] = 'Ace'
-        if card['value'] == cards_per_suit - 3: card['value'] = 'Jack'
-        if card['value'] == cards_per_suit - 2: 
+        if card['value'] == 11: card['value'] = 'Ace'
+        if card['value'] == 12: card['value'] = 'Jack'
+        if card['value'] == 13: 
             card['value'] = 'Queen'
             card['extra suit'] = random.choice(suits)
-        if card['value'] == cards_per_suit - 1: card['value'] = 'King'
+        if card['value'] == 14: card['value'] = 'King'
 
 def deal():
     for hand in hands:
