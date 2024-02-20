@@ -69,7 +69,7 @@ def rollResults(allRolls): # This function takes the list from rollDice as input
 def main(): # This function calls all the other functions to run in the correct order.
     
     print("Welcome to the dice roller!\nPress Enter to start rolling dice.")
-    input() # This input statement just wits for any instance of the Enter key being pressed, any value entered does nothing.
+    input() # This input statement just waits for any instance of the Enter key being pressed, any value entered does nothing.
     
     while True: # This will loop the program as long as the user would like to keep rolling dice.
         
